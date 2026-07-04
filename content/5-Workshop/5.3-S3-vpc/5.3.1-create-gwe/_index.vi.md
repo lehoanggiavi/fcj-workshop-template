@@ -1,40 +1,65 @@
----
-title : "Tạo một Gateway Endpoint"
-date : 2024-01-01 
+﻿---
+title : "Tạo S3 bucket và cấu trúc Data Lake"
+date : 2026-04-19
 weight : 1
 chapter : false
 pre : " <b> 5.3.1 </b> "
 ---
 
-1. Mở [Amazon VPC console](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1#Home:)
-2. Trong thanh điều hướng, chọn **Endpoints**, click **Create Endpoint**:
+Bước đầu tiên là tạo một S3 bucket để lưu toàn bộ dữ liệu và artifact của hệ thống Fraud Detection.
 
-{{% notice note %}}
-Bạn sẽ thấy 6 điểm cuối VPC hiện có hỗ trợ AWS Systems Manager (SSM). Các điểm cuối này được Mẫu CloudFormation triển khai tự động cho workshop này.
+## 1. Mở Amazon S3 Console
+
+Truy cập AWS Console, tìm dịch vụ **S3** và mở trang quản lý bucket.
+
+![Amazon S3 Console](/images/5-Workshop/5.3-S3-vpc/S3.jpg)
+
+## 2. Tạo bucket cho project
+
+Chọn **Create bucket** và đặt tên bucket theo quy tắc dễ nhận biết, ví dụ:
+
+```text
+fraud-detection-<your-name>-<date>
+```
+
+Tên bucket cần là duy nhất trên toàn AWS, vì vậy có thể thêm tên cá nhân hoặc ngày tạo vào cuối tên bucket.
+
+Cấu hình đề xuất:
+
+| Cấu hình | Giá trị đề xuất |
+| --- | --- |
+| Region | `us-east-1` |
+| Object Ownership | ACLs disabled |
+| Block Public Access | Bật toàn bộ |
+| Bucket Versioning | Có thể tắt trong demo |
+| Default encryption | Giữ mặc định hoặc bật SSE-S3 |
+
+{{% notice warning %}}
+Không public bucket vì dữ liệu giao dịch và model artifact không nên được truy cập công khai.
 {{% /notice %}}
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/endpoints.png)
+![Tạo S3 bucket cho Fraud Detection](/images/5-Workshop/5.3-S3-vpc/create_bucket.jpg)
 
-3. Trong Create endpoint console:
-+ Đặt tên cho endpoint: s3-gwe
-+ Trong service category, chọn **aws services**
+## 3. Tạo cấu trúc thư mục trong bucket
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/create-s3-gwe1.png)
+Sau khi bucket được tạo, tạo các prefix sau để dễ quản lý dữ liệu:
 
-+ Trong **Services**, gõ "s3" trong hộp tìm kiếm và chọn dịch vụ với loại **gateway**
+```text
+raw/
+data_train/
+model/
+model.tar.gz
+```
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/services.png)
+Ý nghĩa:
 
-+ Đối với VPC, chọn **VPC Cloud** từ drop-down menu.
-+ Đối với Route tables, chọn bảng định tuyến mà đã liên kết với 2 subnets (lưu ý: đây không phải là bảng định tuyến chính cho VPC mà là bảng định tuyến thứ hai do CloudFormation tạo).
+- `raw/`: chứa file dataset gốc `creditcard.csv`.
+- `data_train/`: chứa dữ liệu train sau bước chuẩn bị dữ liệu.
+- `model/`: chứa model artifact và các file liên quan.
+- `model.tar.gz`: file model đã đóng gói để tạo SageMaker Endpoint.
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/vpc.png)
+![Cấu trúc S3 bucket sau khi tạo](/images/5-Workshop/5.3-S3-vpc/bucket.jpg)
 
-+ Đối với Policy, để tùy chọn mặc định là Full access để cho phép toàn quyền truy cập vào dịch vụ. Bạn sẽ triển khai VPC endpoint policy trong phần sau để chứng minh việc hạn chế quyền truy cập vào S3 bucket dựa trên các policies.
+## Kết quả cần đạt
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/policy.png)
-
-+ Không thêm tag vào VPC endpoint.
-+ Click Create endpoint, click x sau khi nhận được thông báo tạo thành công.
-
-![endpoint](/images/5-Workshop/5.3-S3-vpc/complete.png)
+Sau bước này, S3 bucket đã sẵn sàng để tải dataset trực tiếp bằng Amazon S3 Console và lưu các artifact của pipeline Machine Learning.

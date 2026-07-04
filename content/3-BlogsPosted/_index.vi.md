@@ -1,22 +1,23 @@
 ---
 title: "Các bài blogs đã đăng"
-date: 2024-01-01
+date: 2026-04-19
 weight: 3
 chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}  
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Phần Blog Posts tổng hợp các bài viết chia sẻ kiến thức và kinh nghiệm học được trong quá trình thực hiện project **Fraud Detection trên AWS**. Các bài blog được định hướng bám sát project cá nhân, bao gồm kiến trúc hệ thống, tối ưu chi phí và thiết kế pipeline realtime trên AWS.
 
-Tại đây sẽ là phần liệt kê, giới thiệu các blogs mà các bạn đã đăng trên [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). Ví dụ:
+## Danh sách blog
 
-###  [Blog 1 - SESSION POLICIES TRONG AMAZON EKS POD IDENTITY](3.1-Blog1/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+### [Blog 1 - Phát hiện gian lận thẻ tín dụng bằng Machine Learning trên AWS](3.1-Blog1/)
 
-###  [Blog 2 - ...](3.2-Blog2/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+- **Nội dung chính:** Thiết kế hệ thống phát hiện gian lận thẻ tín dụng theo thời gian thực trên AWS, gồm Training Zone, Real-time Zone, bài học triển khai, tối ưu chi phí và hướng phát triển tương lai.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+### [Blog 2 - Amazon tự động hóa bài toán lập kế hoạch nhân sự với Serverless như thế nào?](3.2-Blog2/)
+
+- **Nội dung chính:** Case study ALAP của Amazon, sử dụng kiến trúc Serverless và Event-Driven với S3, Glue, Aurora PostgreSQL, EventBridge, SQS, Lambda, DynamoDB, Cognito và CloudFront để tự động hóa lập kế hoạch nhân sự.
+
+### [Blog 3 - Chạy Apache Spark Serverless với Amazon Athena](3.3-Blog3/)
+
+- **Nội dung chính:** Chia sẻ cách Amazon Athena hỗ trợ Apache Spark serverless, giúp chạy Spark Session qua Spark Connect mà không cần quản lý EMR hoặc Spark Cluster, đồng thời tận dụng S3, Glue Data Catalog, Lake Formation và Airflow.

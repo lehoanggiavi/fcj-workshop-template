@@ -1,0 +1,120 @@
+<style>
+/* ===== Language Toggle Button ===== */
+.lang-toggle-container {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 10000;
+}
+
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
+  color: #fff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  user-select: none;
+}
+
+.lang-toggle-btn:hover {
+  background: linear-gradient(135deg, #ff9900 0%, #ffad33 100%);
+  color: #232f3e;
+  box-shadow: 0 6px 25px rgba(255, 153, 0, 0.35), 0 0 0 1px rgba(255, 153, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.lang-toggle-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
+}
+
+.lang-toggle-btn .lang-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.lang-toggle-btn .lang-current {
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+.lang-toggle-btn .lang-arrow {
+  opacity: 0.5;
+  font-size: 11px;
+}
+
+.lang-toggle-btn .lang-target {
+  font-weight: 700;
+}
+
+.lang-toggle-btn:hover .lang-current {
+  opacity: 0.7;
+}
+
+.lang-toggle-btn:hover .lang-arrow {
+  opacity: 0.8;
+}
+
+/* Pulse animation on first load */
+@keyframes langPulse {
+  0% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 153, 0, 0.4); }
+  70% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), 0 0 0 8px rgba(255, 153, 0, 0); }
+  100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 153, 0, 0); }
+}
+
+.lang-toggle-btn.pulse {
+  animation: langPulse 1.5s ease-out 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lang-toggle-container {
+    top: 10px;
+    right: 12px;
+  }
+  .lang-toggle-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  .lang-toggle-btn .lang-icon {
+    font-size: 14px;
+  }
+}
+</style>
+
+<!-- Language Toggle Button -->
+{{ if hugo.IsMultilingual }}
+<div class="lang-toggle-container">
+  {{ $pageLang := .Page.Lang }}
+  {{ range .Page.AllTranslations }}
+    {{ if ne .Lang $pageLang }}
+      <a href="{{ .Permalink }}" class="lang-toggle-btn pulse" title="Switch to {{ .Language.LanguageName }}">
+        <span class="lang-icon">🌐</span>
+        {{ if eq $pageLang "vi" }}
+          <span class="lang-current">VI</span>
+          <span class="lang-arrow">→</span>
+          <span class="lang-target">EN</span>
+        {{ else }}
+          <span class="lang-current">EN</span>
+          <span class="lang-arrow">→</span>
+          <span class="lang-target">VI</span>
+        {{ end }}
+      </a>
+    {{ end }}
+  {{ end }}
+</div>
+{{ end }}

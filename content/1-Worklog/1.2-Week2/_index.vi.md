@@ -1,59 +1,41 @@
----
+﻿---
 title: "Worklog Tuần 2"
-date: 2024-01-01
-weight: 1
+date: 2026-04-26
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+**Thời gian:** 26/04/2026 - 02/05/2026
 
-### Mục tiêu tuần 2:
+## Mục tiêu tuần 2
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Phân tích bài toán phát hiện gian lận giao dịch trong bối cảnh hệ thống tài chính/ngân hàng.
+- Xác định input, output và tiêu chí đánh giá thành công của hệ thống.
+- Lựa chọn hướng tiếp cận Machine Learning phù hợp với quy mô project thực tập.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## Công việc đã thực hiện
 
+- Tìm hiểu đặc điểm của bài toán fraud detection:
+  - Dữ liệu giao dịch có nhiều thuộc tính như số tiền, thời gian, loại giao dịch, vị trí, thiết bị và lịch sử hành vi.
+  - Dữ liệu gian lận thường mất cân bằng so với giao dịch bình thường.
+  - Hệ thống cần phản hồi nhanh để hỗ trợ cảnh báo realtime.
+- Xác định mục tiêu của project:
+  - Nhận giao dịch từ User hoặc Banking System thông qua API Gateway.
+  - Dự đoán giao dịch là `Fraud` hoặc `Normal`.
+  - Trả về xác suất gian lận `fraud_probability` nếu có.
+  - Gửi cảnh báo qua SNS đến Email Admin khi phát hiện giao dịch nghi ngờ.
+  - Lưu toàn bộ lịch sử dự đoán thông qua Kinesis Firehose xuống Amazon S3 để phục vụ audit và retraining.
+- Khảo sát một số thuật toán Machine Learning có thể dùng:
+  - Logistic Regression
+  - Decision Tree
+  - Random Forest
+  - Gradient Boosting
+- Chọn **Random Forest** làm mô hình chính vì dễ triển khai, dễ giải thích và phù hợp với dữ liệu dạng bảng.
 
-### Kết quả đạt được tuần 2:
+## Kết quả đạt được
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Xác định rõ bài toán, phạm vi và đầu ra mong muốn của hệ thống.
+- Chọn được hướng tiếp cận Machine Learning phù hợp cho project.
+- Xác định các thành phần chính của hệ thống realtime fraud detection.
+- Có cơ sở để thiết kế kiến trúc AWS ở các tuần tiếp theo.

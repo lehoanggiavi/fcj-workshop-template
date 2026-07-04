@@ -1,31 +1,28 @@
----
+﻿---
 title: "Báo cáo thực tập"
 date: 2024-01-01
 weight: 1
 chapter: false
 ---
 
-# Báo cáo thực tập
 ### Thông tin sinh viên:
-&emsp; **Họ và tên:** Nguyễn Văn A
+&emsp; **Họ và tên:** Lê Hoàng Gia Vĩ
 
-&emsp; **Số điện thoại:** 0989888999
+&emsp; **Số điện thoại:** 0366333953
 
-&emsp; **Email:** Anguyenvan@gmail.com
+&emsp; **Email:** lehoanggiavi21082004@gmail.com
 
-&emsp; **Trường:** Đại học Sư phạm Kỹ thuật TP.HCM
+&emsp; **Trường:** Đại học Công nghệ TP HCM
 
-&emsp; **Ngành:** Công nghệ thông tin
+&emsp; **Ngành:** Khoa Học Dữ Liệu
 
-&emsp; **Lớp:** AWS082025
+&emsp; **Công ty thực tập:** AWS
 
-&emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
+&emsp; **Vị trí thực tập:** Cloud Engineering
 
-&emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
+&emsp; **Thời gian thực tập:** Từ ngày 19/04/2026 đến ngày 19/07/2026
 
-&emsp; **Thời gian thực tập:** Từ ngày 12/08/2025 đến ngày 12/11/2025
-
-![Ảnh đại diện của bạn](/images/avatar.png)
+![Ảnh đại diện của bạn](/images/avatar.jpg)
 
 
 

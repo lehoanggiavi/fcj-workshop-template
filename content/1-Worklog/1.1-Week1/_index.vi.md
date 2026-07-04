@@ -1,59 +1,43 @@
----
+﻿---
 title: "Worklog Tuần 1"
-date: 2024-01-01
+date: 2026-04-19
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+**Thời gian:** 19/04/2026 - 25/04/2026
 
-### Mục tiêu tuần 1:
+## Mục tiêu tuần 1
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Làm quen với chương trình thực tập, yêu cầu báo cáo và cấu trúc FCAJ Workshop Template.
+- Ôn lại các khái niệm nền tảng của AWS để chuẩn bị cho project cá nhân.
+- Xác định hướng project: **áp dụng Machine Learning để phát hiện gian lận giao dịch trên AWS**.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## Công việc đã thực hiện
 
+- Tìm hiểu cách tổ chức báo cáo thực tập dưới dạng website workshop bằng Hugo.
+- Khảo sát các phần bắt buộc của báo cáo: thông tin sinh viên, worklog, proposal, blog, event, workshop, self-evaluation và feedback.
+- Ôn lại các nhóm dịch vụ AWS cơ bản:
+  - Compute
+  - Storage
+  - Networking
+  - Machine Learning
+  - Serverless
+  - Monitoring
+- Tìm hiểu vai trò của các dịch vụ có khả năng sử dụng trong project:
+  - Amazon S3
+  - Amazon SageMaker
+  - AWS Lambda
+  - Amazon API Gateway
+  - Amazon Kinesis
+  - Amazon SNS
+  - Amazon CloudWatch
+- Xác định project kỹ thuật chính sẽ tập trung vào bài toán phát hiện gian lận giao dịch theo thời gian thực.
 
-### Kết quả đạt được tuần 1:
+## Kết quả đạt được
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Nắm được yêu cầu tổng thể của báo cáo thực tập và cách triển khai báo cáo dưới dạng website.
+- Hiểu vai trò cơ bản của các dịch vụ AWS sẽ được dùng trong project.
+- Xác định được chủ đề project cá nhân phù hợp với yêu cầu chương trình: **Real-time Fraud Detection System using Machine Learning on AWS**.
+- Có định hướng ban đầu cho pipeline gồm hai phần: training model và realtime inference.

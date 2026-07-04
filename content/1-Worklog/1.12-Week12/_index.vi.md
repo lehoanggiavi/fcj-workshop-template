@@ -1,58 +1,55 @@
----
+﻿---
 title: "Worklog Tuần 12"
-date: 2024-01-01
-weight: 2
+date: 2026-04-19
+weight: 12
 chapter: false
-pre: " <b> 1.12 </b> "
+pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-### Mục tiêu tuần 12:
+**Thời gian:** 05/07/2026 - 19/07/2026
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+## Mục tiêu tuần 12
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+- Hoàn thiện kịch bản kiểm thử end-to-end cho hệ thống fraud detection.
+- Hoàn thiện nội dung báo cáo workshop bằng tiếng Việt.
+- Chuẩn bị phần clean-up để tránh phát sinh chi phí sau khi demo.
 
+## Công việc đã thực hiện
 
-### Kết quả đạt được tuần 12:
+- Xây dựng kịch bản kiểm thử luồng end-to-end:
+  - Gửi transaction mẫu vào API Gateway.
+  - Lambda nhận và validate request.
+  - Transaction được đưa vào Kinesis.
+  - Lambda realtime đọc record và tạo feature.
+  - Lambda gọi SageMaker Endpoint để dự đoán.
+  - Nếu kết quả là Fraud, SNS gửi email cảnh báo.
+  - Kết quả prediction được ghi xuống S3 thông qua Kinesis Firehose.
+- Chuẩn bị các test case cần chạy khi triển khai thực tế:
+  - Giao dịch bình thường.
+  - Giao dịch có dấu hiệu bất thường.
+  - Request thiếu field bắt buộc.
+  - Request sai kiểu dữ liệu.
+- Rà soát nội dung báo cáo theo các phần bắt buộc:
+  - Worklog.
+  - Proposal.
+  - Workshop.
+  - Self-evaluation.
+  - Feedback.
+- Lập danh sách tài nguyên cần dọn dẹp:
+  - SageMaker Endpoint.
+  - Endpoint configuration.
+  - SageMaker model.
+  - Lambda functions.
+  - API Gateway.
+  - Kinesis Data Stream.
+  - Kinesis Firehose.
+  - SNS Topic.
+  - S3 bucket hoặc object demo nếu không cần giữ lại.
+  - CloudWatch Log Groups nếu cần xóa.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Kết quả đạt được
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Có kịch bản kiểm thử end-to-end cho hệ thống phát hiện gian lận realtime.
+- Có nội dung worklog phản ánh quá trình xây dựng project trong 12 tuần.
+- Xác định được các tài nguyên cần clean-up để tránh phát sinh chi phí.
+- Sẵn sàng tiếp tục bổ sung minh chứng triển khai, hình ảnh kiểm thử và kết quả thực tế vào Workshop.

@@ -1,31 +1,64 @@
 ---
-title: "Blog 2"
-date: 2024-01-01
-weight: 1
+title: "Blog 2 - Amazon tự động hóa bài toán lập kế hoạch nhân sự với Serverless như thế nào?"
+date: 2026-04-19
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+# Amazon tự động hóa bài toán lập kế hoạch nhân sự với Serverless như thế nào?
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Chào mọi người trong cộng đồng AWS Study Group VN.
 
-Các điểm chính cần nắm:
+Mình vừa đọc một bài viết khá thú vị từ AWS Architecture Blog về hệ thống **ALAP (Automated Labor Assumptions Platform)** mà Amazon xây dựng để tự động hóa việc lập kế hoạch nhân sự cho hơn 100 trung tâm phân loại hàng hóa tại Bắc Mỹ.
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+## Bài toán
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+Trước đây, mỗi tuần các **Labor Planning Analyst (LPA)** phải tổng hợp dữ liệu từ nhiều nguồn, chỉnh sửa hàng loạt file Excel, họp với các bộ phận và tạo dữ liệu đầu vào cho hệ thống lập kế hoạch nhân sự.
 
-...Hình ảnh...
+Quy trình này mất khoảng **10+ giờ mỗi tuần cho mỗi planner**, dễ xảy ra sai sót, khó mở rộng và gần như không có audit trail.
 
-...Link...
+## Kiến trúc giải pháp
 
-...Hướng dẫn...
+Amazon xây dựng một nền tảng Serverless hoàn toàn trên AWS với các thành phần:
+
+- **Amazon S3** lưu trữ dữ liệu và tài liệu hướng dẫn.
+- **AWS Glue** xử lý ETL và tổng hợp dữ liệu từ nhiều hệ thống.
+- **Amazon Aurora PostgreSQL** đóng vai trò Data Mart phục vụ các truy vấn phân tích.
+- **Amazon EventBridge** lên lịch chạy workflow hàng tuần.
+- **Amazon SQS** phân phối hơn 3.000 tác vụ song song cho từng site và từng metric.
+- **AWS Lambda** xử lý tính toán, API backend và orchestration.
+- **Amazon DynamoDB** lưu metadata, trạng thái job và lịch sử override.
+- **Amazon Cognito + CloudFront + S3** xây dựng giao diện web cho người dùng.
+
+## Quy trình hoạt động
+
+Mỗi tuần, **EventBridge** tự động kích hoạt pipeline.
+
+**Lambda** tạo hàng nghìn tác vụ song song để đọc dữ liệu lịch sử, áp dụng các quy tắc nghiệp vụ và kết quả từ mô hình Machine Learning, sau đó sinh ra bộ dữ liệu lập kế hoạch cho **13 tuần tiếp theo**.
+
+Người quản lý có thể truy cập giao diện web để xem dữ liệu, chỉnh sửa (**override**), gửi phê duyệt và cuối cùng xuất dữ liệu sang hệ thống tối ưu hóa nhân sự.
+
+## Kết quả đạt được
+
+Sau khi triển khai ALAP, Amazon ghi nhận:
+
+- Giảm khoảng **70% thời gian lập kế hoạch**, từ hơn 10 giờ xuống còn khoảng 3–4 giờ mỗi tuần cho mỗi planner.
+- Chuẩn hóa quy trình cho hơn 100 trung tâm phân loại.
+- Loại bỏ gần như hoàn toàn lỗi nhập liệu thủ công.
+- Có đầy đủ lịch sử thay đổi và phê duyệt (**Audit Trail**).
+- Hoàn thành hơn **3.000 tác vụ xử lý** chỉ trong khoảng 3 giờ.
+
+## Điều mình học được
+
+Điểm mình thấy ấn tượng nhất là cách Amazon kết hợp nhiều dịch vụ Serverless để xây dựng một hệ thống vừa dễ mở rộng vừa tối ưu chi phí:
+
+- **Lambda** xử lý tính toán theo nhu cầu.
+- **SQS** giúp fan-out hàng nghìn tác vụ song song.
+- **Aurora PostgreSQL** phục vụ các truy vấn phân tích phức tạp.
+- **DynamoDB** lưu metadata và trạng thái workflow.
+- **EventBridge** tự động hóa toàn bộ quy trình theo lịch.
+
+Đây là một ví dụ rất điển hình về cách áp dụng kiến trúc **Event-Driven** và **Serverless** để thay thế các quy trình thủ công, giúp tăng hiệu quả vận hành mà vẫn giảm chi phí quản lý hạ tầng.
+
+Nếu mọi người đang xây dựng các hệ thống xử lý dữ liệu theo lô (**batch processing**), workflow tự động hoặc nền tảng nội bộ cho doanh nghiệp, kiến trúc của ALAP là một case study rất đáng để tham khảo.

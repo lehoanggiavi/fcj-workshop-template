@@ -1,59 +1,49 @@
----
+﻿---
 title: "Worklog Tuần 11"
-date: 2024-01-01
-weight: 2
+date: 2026-06-28
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+**Thời gian:** 28/06/2026 - 04/07/2026
 
-### Mục tiêu tuần 11:
+## Mục tiêu tuần 11
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Bổ sung giám sát, log và cảnh báo vận hành cho hệ thống.
+- Rà soát bảo mật cơ bản theo nguyên tắc least privilege.
+- Xem xét các điểm có thể tối ưu chi phí trong quá trình demo và vận hành.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## Công việc đã thực hiện
 
+- Kiểm tra CloudWatch Logs của các Lambda function.
+- Theo dõi log khi request đi qua các thành phần:
+  - API Gateway
+  - Lambda ingest
+  - Kinesis
+  - Lambda feature processing
+  - SageMaker Endpoint
+  - SNS
+  - Firehose
+- Xác định một số metric cần quan sát:
+  - Số lượng request API.
+  - Lỗi Lambda.
+  - Thời gian xử lý Lambda.
+  - Lỗi khi gọi SageMaker Endpoint.
+  - Số lượng record đi qua Kinesis/Firehose.
+- Rà soát IAM Role cho từng thành phần:
+  - Lambda chỉ có quyền ghi vào Kinesis nếu cần.
+  - Lambda realtime chỉ có quyền gọi SageMaker Endpoint, publish SNS và ghi Firehose theo phạm vi cần thiết.
+  - Không hard-code access key hoặc secret key trong source code.
+- Ghi nhận các hướng tối ưu chi phí:
+  - Chỉ bật SageMaker Endpoint khi cần demo.
+  - Dọn dẹp endpoint sau khi thực hành.
+  - Sử dụng dữ liệu demo vừa đủ.
+  - Theo dõi tài nguyên phát sinh chi phí.
 
-### Kết quả đạt được tuần 11:
+## Kết quả đạt được
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Có kế hoạch giám sát hệ thống bằng CloudWatch Logs và metric.
+- Nắm được các điểm cần kiểm tra khi hệ thống realtime gặp lỗi.
+- Rà soát được các quyền IAM cơ bản để tránh cấp quyền quá rộng.
+- Xác định được các hành động tối ưu chi phí và giảm rủi ro phát sinh chi phí AWS.

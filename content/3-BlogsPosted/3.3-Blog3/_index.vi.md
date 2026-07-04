@@ -1,31 +1,78 @@
 ---
-title: "Blog 3"
-date: 2024-01-01
-weight: 1
+title: "Blog 3 - Chạy Apache Spark Serverless với Amazon Athena"
+date: 2026-04-19
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+# [AWS Knowledge Sharing] Chạy Apache Spark Serverless với Amazon Athena – Không cần quản lý Cluster
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Chào mọi người trong cộng đồng AWS Study Group VN.
 
-Các điểm chính cần nắm:
+Mình vừa đọc một bài viết khá hay từ AWS Big Data Blog về **Apache Spark engine trong Amazon Athena**. Điểm nổi bật là giờ đây chúng ta có thể chạy Spark hoàn toàn serverless, không cần dựng hay quản lý EMR hoặc các Spark Cluster như trước.
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+## Bài toán
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+Khi sử dụng Spark theo cách truyền thống, các đội Data thường phải:
 
-...Hình ảnh...
+- Quản lý EC2, networking và cấu hình Spark Cluster.
+- Chờ cluster khởi động trước khi chạy job.
+- Trả chi phí ngay cả khi cluster không hoạt động.
+- Khó đáp ứng đồng thời nhiều nhu cầu như Notebook, ETL Pipeline và phân tích dữ liệu.
 
-...Link...
+Điều này làm tăng chi phí vận hành và khiến thời gian phân tích dữ liệu chậm hơn.
 
-...Hướng dẫn...
+## Giải pháp
+
+AWS giới thiệu **Apache Spark Engine trong Amazon Athena**, cung cấp môi trường Spark hoàn toàn serverless.
+
+Thay vì quản lý cluster, người dùng chỉ cần:
+
+- Tạo một Spark Session.
+- Kết nối thông qua Spark Connect.
+- Chạy code Spark bằng công cụ quen thuộc như Jupyter Notebook, VS Code hoặc Apache Airflow + dbt.
+
+Athena sẽ tự động khởi tạo tài nguyên, mở rộng khi cần và tự giải phóng sau khi hoàn thành.
+
+## Kiến trúc
+
+Kiến trúc sử dụng khá đơn giản:
+
+- **Amazon Athena for Apache Spark** đóng vai trò là Spark Engine.
+- **AWS Glue Data Catalog** quản lý metadata.
+- Dữ liệu được lưu trên **Amazon S3**.
+- Người dùng có thể kết nối từ Jupyter Notebook, VS Code hoặc Apache Airflow thông qua Spark Connect.
+- Nếu cần triển khai trong môi trường riêng tư, có thể sử dụng **Amazon MWAA (Managed Airflow)** kết hợp với VPC Endpoint để kết nối an toàn.
+
+## Điểm mới đáng chú ý
+
+Phiên bản mới của Athena for Spark bổ sung nhiều tính năng hữu ích:
+
+- **Spark Connect** giúp kết nối từ các công cụ bên ngoài một cách bảo mật.
+- Khởi tạo Spark Session nhanh hơn, giảm đáng kể thời gian chờ.
+- **Live Spark UI** hỗ trợ theo dõi và debug job.
+- **Session-level Cost Attribution** giúp theo dõi chi phí theo từng phiên làm việc.
+- Tích hợp **AWS Lake Formation** để quản lý quyền truy cập dữ liệu.
+
+## Các mô hình sử dụng
+
+AWS giới thiệu ba cách triển khai phổ biến:
+
+- **Jupyter Notebook:** phù hợp cho Data Scientist thực hiện khám phá dữ liệu và Feature Engineering.
+- **VS Code:** hỗ trợ lập trình và kiểm thử ứng dụng Spark ngay trên IDE quen thuộc.
+- **Apache Airflow + dbt:** xây dựng các pipeline ETL tự động và quản lý workflow theo lịch.
+
+## Điều mình thấy thú vị
+
+Điểm mình ấn tượng nhất là giờ đây Spark không còn gắn liền với việc quản lý cluster.
+
+Chúng ta chỉ cần tập trung viết code Spark, còn Athena sẽ tự động:
+
+- Khởi tạo Spark Session trong vài giây.
+- Auto Scaling theo khối lượng công việc.
+- Tính phí theo thời gian sử dụng thay vì phải duy trì cluster 24/7.
+
+Đây là một lựa chọn rất đáng cân nhắc cho các workload phân tích dữ liệu, ETL hoặc Machine Learning có lưu lượng không ổn định.
+
+Theo mình, **Athena for Apache Spark** là một bước tiến giúp các đội Data giảm đáng kể chi phí vận hành và thời gian quản lý hạ tầng, đồng thời vẫn tận dụng được toàn bộ hệ sinh thái AWS như S3, Glue Data Catalog, Lake Formation và Airflow. Nếu mọi người đang xây dựng Data Lake hoặc Data Platform trên AWS, đây là một dịch vụ rất đáng để trải nghiệm.

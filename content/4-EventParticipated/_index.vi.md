@@ -1,46 +1,25 @@
 ---
 title: "Các events đã tham gia"
-date: 2024-01-01
+date: 2026-04-19
 weight: 4
 chapter: false
 pre: " <b> 4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Phần này tổng hợp các sự kiện FCAJ Community Day mà tôi đã tham gia trong quá trình thực tập. Mỗi sự kiện bao gồm thông tin tổ chức, vai trò tham gia, nội dung chính, hình ảnh minh chứng và bài học rút ra liên quan đến định hướng học tập cũng như project AWS Fraud Detection.
 
-> Trong phần này, các bạn cần liệt kê và mô tả chi tiết các sự kiện (event) mà mình đã tham gia trong suốt quá trình thực tập hoặc làm việc. 
-> 
-> Mỗi sự kiện nên được trình bày theo định dạng Event 1, Event 2, Event 3…, kèm theo các thông tin:
-> * Tên sự kiện
-> * Thời gian tổ chức
-> * Địa điểm (nếu có)
-> * Vai trò của bạn trong sự kiện (người tham dự, hỗ trợ tổ chức, diễn giả, v.v.)
-> * Mô tả ngắn gọn nội dung và hoạt động chính trong sự kiện
-> * Kết quả hoặc giá trị đạt được (bài học, kỹ năng mới, đóng góp cho nhóm/dự án)
-> * Việc liệt kê này giúp thể hiện rõ sự tham gia thực tế của bạn, cũng như các kỹ năng mềm và kinh nghiệm bạn đã tích lũy qua từng sự kiện.
+## Danh sách event đã tham gia
 
+### [Event 1 - FCAJ Community Day - Conference Call](4.1-Event1/)
 
-Trong quá trình thực tập, em đã tham gia 2 events, với mỗi event là một trải nghiệm đáng nhớ với những kiến thức mới, hay và bổ ích, cùng với đó là nhứng món quà và những khoảnh khắc rất tuyệt vời.
+- **Thời gian:** Saturday 23 May
+- **Địa điểm:** Bitexco Financial Tower
+- **Vai trò:** Guest
+- **Nội dung nổi bật:** AI context, LotusHacks/UTMorpho, Amazon CloudFront, Amazon Quick, tính không deterministic của LLM và enterprise-grade multi-agent system.
 
-### [Event 1](4.1-Event1/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+### [Event 2 - FCAJ Community Day](4.2-Event2/)
 
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
-
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
-
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
-
-
-
-### [Event 2](4.2-Event2/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
-
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
-
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
-
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
-
+- **Thời gian:** Saturday 27 June
+- **Địa điểm:** Bitexco Financial Tower
+- **Vai trò:** Guest
+- **Nội dung nổi bật:** Deep Response Engine, Voice Agents, AWS DevOps Agent, AI-powered workforce planning và secure private MCP connection với Amazon Quick.

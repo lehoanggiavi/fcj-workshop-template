@@ -1,59 +1,46 @@
----
+﻿---
 title: "Worklog Tuần 4"
-date: 2024-01-01
-weight: 1
+date: 2026-05-10
+weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+**Thời gian:** 10/05/2026 - 16/05/2026
 
-### Mục tiêu tuần 4:
+## Mục tiêu tuần 4
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Chuẩn bị dữ liệu cho bài toán Machine Learning.
+- Thực hiện tiền xử lý dữ liệu và xây dựng feature phục vụ huấn luyện.
+- Đảm bảo dữ liệu đầu vào có định dạng nhất quán giữa training và inference.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## Công việc đã thực hiện
 
+- Khảo sát các trường dữ liệu có thể dùng cho mô hình fraud detection, ví dụ:
+  - `transaction_amount`
+  - `transaction_type`
+  - `merchant_category`
+  - `location`
+  - `device_type`
+  - `transaction_hour`
+  - `user_history_count`
+  - `label`
+- Thực hiện các bước tiền xử lý:
+  - Kiểm tra missing values.
+  - Chuẩn hóa kiểu dữ liệu.
+  - Mã hóa biến phân loại nếu cần.
+  - Chuẩn hóa hoặc scale các trường số.
+  - Tách dữ liệu train/test.
+- Xây dựng các feature có ý nghĩa cho bài toán gian lận:
+  - Thời điểm giao dịch.
+  - Giá trị giao dịch bất thường.
+  - Nhóm loại giao dịch.
+  - Đặc điểm thiết bị hoặc vị trí.
+- Lưu dữ liệu đã xử lý vào Amazon S3 để SageMaker có thể đọc trong quá trình training.
 
-### Kết quả đạt được tuần 4:
+## Kết quả đạt được
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Có bộ dữ liệu đã được chuẩn hóa để huấn luyện mô hình.
+- Hiểu rõ hơn vai trò của feature engineering trong bài toán fraud detection.
+- Xác định được danh sách feature cần giữ nhất quán giữa dữ liệu huấn luyện và bước **Lambda Read Features** khi gọi model ở realtime pipeline.
+- Chuẩn bị dữ liệu sẵn sàng cho bước huấn luyện trên Amazon SageMaker.

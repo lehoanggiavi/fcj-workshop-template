@@ -1,43 +1,40 @@
----
-title : "Tạo một S3 Interface endpoint"
-date : 2024-01-01
+﻿---
+title : "Train model và lưu artifact"
+date : 2026-04-19
 weight : 2
 chapter : false
 pre : " <b> 5.4.2 </b> "
 ---
 
-Trong phần này, bạn sẽ tạo và kiểm tra Interface Endpoint  S3 bằng cách sử dụng môi trường truyền thống mô phỏng.
+Sau khi môi trường Python đã sẵn sàng, bước tiếp theo là đọc dataset từ S3, xử lý dữ liệu và huấn luyện mô hình Random Forest.
 
-1. Quay lại Amazon VPC menu. Trong thanh điều hướng bên trái, chọn Endpoints, sau đó click Create Endpoint.
+## Luồng xử lý chính
 
-2. Trong Create endpoint console:
-+ Đặt tên interface endpoint
-+ Trong Service category, chọn **aws services** 
+1. Đọc file `creditcard.csv` từ S3.
+2. Kiểm tra dữ liệu đầu vào.
+3. Tách feature và label.
+4. Chia dữ liệu train/test.
+5. Chuẩn hóa dữ liệu nếu cần.
+6. Train mô hình Random Forest.
+7. Đánh giá kết quả model.
+8. Lưu model và scaler bằng `joblib`.
 
-![name](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint1.png)
+## Artifact cần tạo
 
-3.  Trong Search box, gõ S3 và nhấn Enter. Chọn endpoint có tên com.amazonaws.us-east-1.s3. Đảm bảo rằng cột Type có giá trị Interface.
+Sau bước train, cần tạo được các file:
 
-![service](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint2.png)
+```text
+model.joblib
+scaler.joblib
+```
 
-4. Đối với VPC, chọn VPC Cloud từ drop-down.
+Trong đó:
+
+- `model.joblib`: mô hình Random Forest đã train.
+- `scaler.joblib`: scaler dùng để đảm bảo dữ liệu realtime được chuẩn hóa giống lúc training.
+
+![Kết quả train và đánh giá model Random Forest](/images/5-Workshop/5.4-S3-onprem/evaluate.jpg)
+
 {{% notice warning %}}
-Đảm bảo rằng bạn chọn "VPC Cloud" và không phải "VPC On-prem"
+Cần đảm bảo feature mapping khi training và feature mapping trong realtime Lambda là nhất quán. Nếu thứ tự hoặc ý nghĩa feature khác nhau, model có thể dự đoán sai.
 {{% /notice %}}
-+ Mở rộng **Additional settings** và đảm bảo rằng Enable DNS name *không* được chọn (sẽ sử dụng điều này trong phần tiếp theo của workshop)
-
-![vpc](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint3.png)
-
-5. Chọn 2 subnets trong AZs sau: us-east-1a and us-east-1b
-
-![subnets](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint4.png)
-
-6. Đối với Security group, chọn SGforS3Endpoint:
-
-![sg](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint5.png)
-
-7. Giữ default policy - full access và click Create endpoint
-
-![success](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint-success.png)
-
-Chúc mừng bạn đã tạo thành công S3 interface endpoint. Ở bước tiếp theo, chúng ta sẽ kiểm tra interface endpoint.

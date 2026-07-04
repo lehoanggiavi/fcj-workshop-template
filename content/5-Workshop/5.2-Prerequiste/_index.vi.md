@@ -1,242 +1,201 @@
----
+﻿---
 title : "Các bước chuẩn bị"
-date : 2024-01-01 
+date : 2026-04-19
 weight : 2
 chapter : false
 pre : " <b> 5.2. </b> "
 ---
 
-#### IAM permissions
-Gắn IAM permission policy sau vào tài khoản aws user của bạn để triển khai và dọn dẹp tài nguyên trong workshop này.
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
-                "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
+Trước khi triển khai workshop phát hiện gian lận thẻ tín dụng bằng Machine Learning trên AWS, cần chuẩn bị tài khoản AWS, region, quyền IAM, dataset mẫu, email nhận cảnh báo và một số công cụ hỗ trợ.
 
+## 1. Tài khoản AWS sử dụng
+
+Trong workshop này, tài khoản AWS sử dụng là:
+
+```text
+ViLamAI2108
 ```
 
-#### Khởi tạo tài nguyên bằng CloudFormation
+![Tài khoản AWS ViLamAI2108](/images/5-Workshop/5.2-Prerequisite/account.jpg)
 
-Trong lab này, chúng ta sẽ dùng N.Virginia region (us-east-1).
+## 2. Region triển khai
 
-Để chuẩn bị cho môi trường làm workshop, chúng ta deploy CloudFormation template sau (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Để nguyên các lựa chọn mặc định.
+Region sử dụng trong workshop:
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+```text
+us-east-1 - N. Virginia
+```
 
-+ Lựa chọn 2 mục acknowledgement 
-+ Chọn Create stack
+Lý do chọn `us-east-1`:
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+- Đây là region phổ biến, hỗ trợ đầy đủ các dịch vụ cần dùng trong workshop.
+- Dễ kiểm tra các dịch vụ như Amazon S3, SageMaker, API Gateway, Lambda, Kinesis, SNS, Firehose và CloudWatch.
+- Phù hợp với nhiều tài liệu AWS và ví dụ triển khai.
 
-Quá trình triển khai CloudFormation cần khoảng 15 phút để hoàn thành.
+![Region us-east-1 trên AWS Console](/images/5-Workshop/5.2-Prerequisite/region.png)
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+## 3. Dịch vụ AWS cần sử dụng
 
-+ 2 VPCs đã được tạo
+Workshop này sử dụng các dịch vụ chính sau:
 
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
+| Dịch vụ | Mục đích sử dụng |
+| --- | --- |
+| Amazon S3 | Lưu dataset, model artifact và prediction history |
+| Amazon SageMaker | Train model, đóng gói model và deploy endpoint |
+| SageMaker Real-time Endpoint | Nhận request prediction realtime |
+| Amazon API Gateway | Nhận transaction request từ User hoặc Banking System |
+| AWS Lambda | Validate dữ liệu, xử lý feature, gọi endpoint và gửi kết quả |
+| Amazon Kinesis Data Streams | Tiếp nhận và buffer transaction stream |
+| Kinesis Firehose | Ghi prediction history xuống S3 |
+| Amazon SNS | Gửi email cảnh báo khi phát hiện Fraud |
+| Amazon CloudWatch | Theo dõi log, metric và hỗ trợ debug |
+| IAM Role | Phân quyền giữa các dịch vụ |
 
-+ 3 EC2s đã được tạo
+![Các dịch vụ AWS sử dụng trong workshop](/images/5-Workshop/5.2-Prerequisite/service.jpg)
 
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+## 4. IAM Role và quyền truy cập
+
+Trong quá trình thực hiện workshop, tài khoản AWS hiện có một số IAM Role liên quan đến SageMaker và các dịch vụ tích hợp. Một số role đã ghi nhận gồm:
+
+```text
+AmazonSageMaker-ExecutionRole-20260526T124392
+AmazonSageMaker-ExecutionRole-20260604T161463
+AmazonSageMakerAdminIAMExecutionRole
+AmazonSagemakerCanvasBedrockRole-20260526T124391
+AmazonSageMakerCanvasEMRSExecutionAccess-20260526T124391
+AmazonSageMakerServiceCatalogProductsApiGatewayRole
+AmazonSageMakerServiceCatalogProductsCloudformationRole
+AmazonSageMakerServiceCatalogProductsCodeBuildRole
+AmazonSageMakerServiceCatalogProductsCodePipelineRole
+AmazonSageMakerServiceCatalogProductsEventsRole
+AmazonSageMakerServiceCatalogProductsExecutionRole
+AmazonSageMakerServiceCatalogProductsFirehoseRole
+AmazonSageMakerServiceCatalogProductsGlueRole
+AmazonSageMakerServiceCatalogProductsLambdaRole
+AmazonSageMakerServiceCatalogProductsLaunchRole
+AmazonSageMakerServiceCatalogProductsUseRole
+AWSServiceRoleForAmazonAthena
+AWSServiceRoleForAmazonEMRServerless
+AWSServiceRoleForAmazonSageMakerNotebooks
+AWSServiceRoleForResourceExplorer
+```
+
+{{% notice note %}}
+Danh sách IAM Role trên được dùng để đối chiếu các quyền liên quan đến SageMaker và các dịch vụ AWS trong workshop. Khi triển khai thực tế, chỉ chọn role phù hợp với từng bước và tránh cấp quyền rộng hơn nhu cầu.
+{{% /notice %}}
+
+### Quyền IAM cần thiết theo chức năng
+
+Thay vì cấp quyền quá rộng, workshop nên định hướng theo nguyên tắc **least privilege**. Các nhóm quyền cần có gồm:
+
+| Nhóm quyền | Dùng cho |
+| --- | --- |
+| S3 permissions | Tạo bucket, tải dataset bằng Amazon S3 Console, đọc model artifact, lưu prediction history |
+| SageMaker permissions | Tạo training job, model, endpoint configuration và endpoint |
+| Lambda permissions | Tạo function, invoke function, ghi log |
+| API Gateway permissions | Tạo REST API hoặc HTTP API để nhận transaction request |
+| Kinesis permissions | Tạo stream, put record, read record |
+| Firehose permissions | Tạo delivery stream và ghi dữ liệu xuống S3 |
+| SNS permissions | Tạo topic, subscribe email, publish message |
+| CloudWatch Logs permissions | Ghi và xem log |
+| IAM PassRole | Cho phép các dịch vụ sử dụng role phù hợp |
+
+![IAM Role và quyền truy cập trên AWS Console](/images/5-Workshop/5.2-Prerequisite/role.jpg)
+
+## 5. Dataset mẫu
+
+Dataset mẫu sử dụng trong workshop nằm trên máy local tại:
+
+```text
+E:\aws\dataset\creditcard.csv
+```
+
+Dataset này được dùng để mô phỏng dữ liệu giao dịch thẻ tín dụng phục vụ bài toán phát hiện gian lận.
+
+Trong quá trình triển khai, dataset sẽ được tải trực tiếp lên Amazon S3 bằng giao diện S3 Console, ví dụ theo cấu trúc:
+
+```text
+s3://<bucket-name>/raw/
+s3://<bucket-name>/data_train/
+s3://<bucket-name>/model/
+s3://<bucket-name>/model.tar.gz
+```
+
+{{% notice warning %}}
+Không sử dụng dữ liệu thẻ tín dụng thật hoặc thông tin nhạy cảm thật trong workshop. Dataset chỉ nên dùng cho mục đích học tập, demo và báo cáo.
+{{% /notice %}}
+
+![Dataset mẫu creditcard.csv](/images/5-Workshop/5.2-Prerequisite/data.jpg)
+
+## 6. Email nhận cảnh báo SNS
+
+Khi hệ thống dự đoán một giao dịch là `Fraud`, Amazon SNS sẽ gửi email cảnh báo đến Admin.
+
+Email dùng để nhận alert:
+
+```text
+lehoanggiavi21082004@gmail.com
+thanpham2k4@gmail.com
+```
+
+Khi tạo SNS subscription, mỗi email cần xác nhận subscription thông qua email AWS gửi về.
+
+![Email nhận cảnh báo SNS](/images/5-Workshop/5.2-Prerequisite/EmailAlter.jpg)
+
+## 7. Python cần chuẩn bị gì?
+
+Python được dùng cho phần Machine Learning, cụ thể là xử lý dữ liệu, huấn luyện mô hình và đóng gói model.
+
+Trong workshop này, Python có thể được sử dụng theo hai cách:
+
+1. Chạy trực tiếp trong **Amazon SageMaker Notebook / Studio**.
+2. Chạy trên máy local để chuẩn bị code, sau đó đưa file cần thiết lên SageMaker/S3 qua giao diện AWS Console nếu cần.
+
+Các thư viện cần dùng gồm:
+
+```text
+pandas
+numpy
+scikit-learn
+joblib
+boto3
+```
+
+Vai trò của từng thư viện:
+
+| Thư viện | Vai trò |
+| --- | --- |
+| pandas | Đọc và xử lý dataset |
+| numpy | Xử lý dữ liệu dạng số |
+| scikit-learn | Train mô hình Random Forest và đánh giá model |
+| joblib | Lưu model thành `model.joblib` và scaler thành `scaler.joblib` |
+| boto3 | Giao tiếp với AWS services bằng Python nếu cần |
+
+Ví dụ kiểm tra thư viện:
+
+```python
+import pandas as pd
+import numpy as np
+import sklearn
+import joblib
+import boto3
+
+print("Environment is ready")
+```
+
+## 8. Cảnh báo chi phí
+
+Trước khi bắt đầu workshop, cần xác định rõ các tài nguyên có thể phát sinh chi phí để tránh để quên sau khi demo hoặc kiểm thử. Các tài nguyên cần đặc biệt chú ý gồm:
+
+- **SageMaker Real-time Endpoint:** có thể tiếp tục phát sinh chi phí khi endpoint ở trạng thái `InService`.
+- **Kinesis Data Streams:** có thể phát sinh chi phí theo shard/hour trong thời gian stream hoạt động.
+- **Kinesis Firehose:** phát sinh chi phí theo lượng dữ liệu ingest và ghi xuống S3.
+- **CloudWatch Logs:** có thể phát sinh chi phí nếu lưu log nhiều hoặc retention quá dài.
+- **Amazon S3:** có chi phí lưu trữ dataset, model artifact và prediction history, tuy thường thấp với dữ liệu demo.
+- **API Gateway và Lambda:** chi phí thường thấp trong workshop, nhưng vẫn nên theo dõi nếu test với nhiều request.
+
+{{% notice warning %}}
+Sau khi demo hoặc hoàn thành workshop, cần thực hiện phần clean-up để xóa SageMaker Endpoint, Kinesis Stream, Firehose, Lambda, API Gateway, SNS và các tài nguyên không còn sử dụng.
+{{% /notice %}}
+
+![Cảnh báo chi phí AWS](/images/5-Workshop/5.2-Prerequisite/cost.jpg)

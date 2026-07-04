@@ -1,37 +1,39 @@
----
+﻿---
 title : "Dọn dẹp tài nguyên"
-date : 2024-01-01
+date : 2026-04-19
 weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+Sau khi hoàn thành demo hoặc kiểm thử workshop, chỉ cần xóa **SageMaker Real-time Endpoint** đã tạo cho phần demo để tránh phát sinh chi phí theo thời gian chạy.
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+Các tài nguyên khác như API Gateway, Lambda, Kinesis, Firehose, SNS, S3, CloudWatch Logs và IAM **không xóa trong bước này** để tránh ảnh hưởng đến các phần workshop còn lại hoặc dữ liệu cần giữ lại cho báo cáo.
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+{{% notice warning %}}
+Không nên bỏ qua bước clean-up SageMaker Endpoint. Endpoint có thể tiếp tục phát sinh chi phí nếu để ở trạng thái `InService`.
+{{% /notice %}}
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+## Tài nguyên cần xóa
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+| Dịch vụ | Tài nguyên cần xóa |
+| --- | --- |
+| SageMaker | Chỉ xóa SageMaker Real-time Endpoint đã dùng để demo |
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+{{% notice note %}}
+Chỉ thao tác với endpoint SageMaker của project Fraud Detection. Không xóa S3 bucket, Lambda function, API Gateway, Kinesis, Firehose, SNS, CloudWatch Logs hoặc IAM Role trong bước này.
+{{% /notice %}}
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+## Các bước dọn dẹp SageMaker Endpoint
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+1. Mở **Amazon SageMaker Console**.
+2. Vào mục **Inference** → **Endpoints**.
+3. Chọn endpoint đã tạo cho project Fraud Detection.
+4. Chọn **Delete** để xóa endpoint.
+5. Xác nhận endpoint đã không còn ở trạng thái `InService`.
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+![SageMaker Endpoint sau khi xóa](/images/5-Workshop/5.6-Cleanup/sagemaker_after_delete.jpg)
 
-5. Xóa các S3 bucket
+## Kết quả cần đạt
 
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+Sau phần clean-up, SageMaker Real-time Endpoint đã được xóa để hạn chế chi phí phát sinh. Các tài nguyên khác được giữ nguyên và không bị ảnh hưởng.

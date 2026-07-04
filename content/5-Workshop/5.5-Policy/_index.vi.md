@@ -1,95 +1,101 @@
----
-title : "VPC Endpoint Policies"
-date : 2024-01-01
+﻿---
+title : "Xây dựng realtime pipeline, alert và lưu lịch sử"
+date : 2026-04-19
 weight : 5
 chapter : false
 pre : " <b> 5.5 </b> "
 ---
 
-Khi bạn tạo một Interface Endpoint  hoặc cổng, bạn có thể đính kèm một chính sách điểm cuối để kiểm soát quyền truy cập vào dịch vụ mà bạn đang kết nối. Chính sách VPC Endpoint là chính sách tài nguyên IAM mà bạn đính kèm vào điểm cuối. Nếu bạn không đính kèm chính sách khi tạo điểm cuối, thì AWS sẽ đính kèm chính sách mặc định cho bạn để cho phép toàn quyền truy cập vào dịch vụ thông qua điểm cuối.
+Phần này xây dựng luồng realtime để nhận giao dịch mới, gọi SageMaker Endpoint để dự đoán Fraud/Normal, gửi cảnh báo khi phát hiện gian lận và lưu lịch sử kết quả dự đoán.
 
-Bạn có thể tạo chính sách chỉ hạn chế quyền truy cập vào các S3 bucket cụ thể. Điều này hữu ích nếu bạn chỉ muốn một số Bộ chứa S3 nhất định có thể truy cập được thông qua điểm cuối.
-
-Trong phần này, bạn sẽ tạo chính sách VPC Endpoint hạn chế quyền truy cập vào S3 bucket được chỉ định trong chính sách VPC Endpoint.
-
-![endpoint diagram](/images/5-Workshop/5.5-Policy/s3-bucket-policy.png)
-
-#### Kết nối tới EC2 và xác minh kết nối tới S3. 
-
-1. Bắt đầu một phiên AWS Session Manager mới trên máy chủ có tên là Test-Gateway-Endpoint. Từ phiên này, xác minh rằng bạn có thể liệt kê nội dung của bucket mà bạn đã tạo trong Phần 1: Truy cập S3 từ VPC.
-
-```
-aws s3 ls s3://<your-bucket-name>
-```
-![test](/images/5-Workshop/5.5-Policy/test1.png)
-
-Nội dung của bucket bao gồm hai tệp có dung lượng 1GB đã được tải lên trước đó.
-
-2. Tạo một bucket S3 mới; tuân thủ mẫu đặt tên mà bạn đã sử dụng trong Phần 1, nhưng thêm '-2' vào tên. Để các trường khác là mặc định và nhấp vào **Create**.
-
-![create bucket](/images/5-Workshop/5.5-Policy/create-bucket.png)
-
-3. Tạo bucket thành công.
-
-![Success](/images/5-Workshop/5.5-Policy/create-bucket-success.png)
-
-Policy mặc định cho phép truy cập vào tất cả các S3 Buckets thông qua VPC endpoint.
-
-4. Trong giao diện **Edit Policy**, sao chép và dán theo policy sau, thay thế yourbucketname-2 với tên bucket thứ hai của bạn. Policy này sẽ cho phép truy cập đến bucket mới thông qua VPC endpoint, nhưng không cho phép truy cập đến các bucket còn lại. Chọn **Save** để kích hoạt policy.
+Luồng realtime chính:
 
 
-```
+![Sơ đồ Realtime Zone cho Fraud Detection](/images/5-Workshop/5.5-Policy/realtime_zone.jpg)
+
+## Các thành phần cần triển khai
+
+| Thành phần | Vai trò |
+| --- | --- |
+| API Gateway | Nhận request giao dịch từ User hoặc Banking System |
+| Lambda ingest | Parse JSON, validate input và đưa transaction vào Kinesis |
+| Kinesis Data Streams | Buffer luồng giao dịch realtime |
+| Lambda Read Features | Đọc transaction từ Kinesis, mapping feature và gọi SageMaker Endpoint |
+| SageMaker Endpoint | Trả về prediction `Fraud` hoặc `Normal` |
+| SNS | Gửi email cảnh báo nếu phát hiện Fraud |
+| Firehose | Ghi prediction result xuống S3 |
+| Amazon S3 | Lưu kết quả prediction để phân tích sau |
+| CloudWatch | Theo dõi log và debug lỗi |
+
+## Request giao dịch mẫu
+
+```json
 {
-  "Id": "Policy1631305502445",
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Stmt1631305501021",
-      "Action": "s3:*",
-      "Effect": "Allow",
-      "Resource": [
-      				"arn:aws:s3:::yourbucketname-2",
-       				"arn:aws:s3:::yourbucketname-2/*"
-       ],
-      "Principal": "*"
-    }
-  ]
+  "transaction": {
+    "Time": 134766.0,
+    "V1": -0.0796525365521887,
+    "V2": 3.22201046223725,
+    "V3": -3.7242013893074,
+    "V4": 6.03734512826846,
+    "V5": 0.583394746331946,
+    "V6": -0.691346179707007,
+    "V7": -1.79988483348006,
+    "V8": -2.62778128431688,
+    "V9": -4.00133786259094,
+    "V10": -2.27152578398956,
+    "V11": 1.51389817939856,
+    "V12": -3.68294346446482,
+    "V13": 0.185830426148668,
+    "V14": -4.69278763834241,
+    "V15": 0.247495674947084,
+    "V16": -2.68188105082889,
+    "V17": -2.28614467887841,
+    "V18": -1.04884490280911,
+    "V19": 0.994829500437418,
+    "V20": 1.1985372847387,
+    "V21": -0.664694294683722,
+    "V22": 1.13855644649209,
+    "V23": -0.350753364122197,
+    "V24": -0.287467300585566,
+    "V25": 0.808889022979463,
+    "V26": 0.823961705381379,
+    "V27": 0.668496565754242,
+    "V28": 0.595609828713858,
+    "Amount": 1.0
 }
 ```
 
-![custom policy](/images/5-Workshop/5.5-Policy/policy2.png)
+## Response kỳ vọng
 
-Cấu hình policy thành công.
-
-![success](/images/5-Workshop/5.5-Policy/success.png)
-
-5. Từ session của bạn trên Test-Gateway-Endpoint instance, kiểm tra truy cập đến S3 bucket bạn tạo ở bước đầu
-
-```
-aws s3 ls s3://<yourbucketname>
+```json
+{
+  "prediction": 1,
+  "probability": 0.9
+}
 ```
 
-Câu lệnh trả về lỗi bởi vì truy cập vào S3 bucket không có quyền trong VPC endpoint policy.
+{{% notice warning %}}
+Phần realtime pipeline cần đảm bảo feature mapping trong Lambda Read Features giống với feature mapping đã dùng khi training. Đây là điểm quan trọng để tránh model dự đoán sai do input không nhất quán.
+{{% /notice %}}
 
-![error](/images/5-Workshop/5.5-Policy/error.png)
+## Hình ảnh triển khai realtime pipeline
 
-6. Trở lại home directory của bạn trên EC2 instance ```cd~```
+### API Gateway endpoint
 
-+ Tạo file ```fallocate -l 1G test-bucket2.xyz ```
-+ Sao chép file lên bucket thứ  2 ```aws s3 cp test-bucket2.xyz s3://<your-2nd-bucket-name>```
+![API Gateway endpoint sau khi deploy](/images/5-Workshop/5.5-Policy/API_Gateway_endpoint.jpg)
 
-![success](/images/5-Workshop/5.5-Policy/test2.png)
+### Lambda ingest function
 
-Thao tác này được cho phép bởi VPC endpoint policy.
+![Lambda ingest function](/images/5-Workshop/5.5-Policy/Lambda_ingest_function.jpg)
 
-![success](/images/5-Workshop/5.5-Policy/test2-success.png)
+### Kinesis Data Stream
 
-Sau đó chúng ta kiểm tra truy cập vào S3 bucket đầu tiên
+![Kinesis Data Stream đang hoạt động](/images/5-Workshop/5.5-Policy/Kinesis_Data_Stream.jpg)
 
- ```aws s3 cp test-bucket2.xyz s3://<your-1st-bucket-name>```
+### Lambda Read Features / CloudWatch Logs
 
- ![fail](/images/5-Workshop/5.5-Policy/test2-fail.png)
+![Lambda Read Features hoặc CloudWatch Logs](/images/5-Workshop/5.5-Policy/Lambda_Read_Features_or_CloudWatch_Logs.jpg)
 
- Câu lệnh xảy ra lỗi bởi vì bucket không có quyền truy cập bởi VPC endpoint policy.
+### Email alert từ Amazon SNS
 
-Trong phần này, bạn đã tạo chính sách VPC Endpoint cho Amazon S3 và sử dụng AWS CLI để kiểm tra chính sách. Các hoạt động AWS CLI liên quan đến bucket S3 ban đầu của bạn thất bại vì bạn áp dụng một chính sách chỉ cho phép truy cập đến bucket thứ hai mà bạn đã tạo. Các hoạt động AWS CLI nhắm vào bucket thứ hai của bạn thành công vì chính sách cho phép chúng. Những chính sách này có thể hữu ích trong các tình huống khi bạn cần kiểm soát quyền truy cập vào tài nguyên thông qua VPC Endpoint.
+![Email alert khi phát hiện giao dịch Fraud](/images/5-Workshop/5.5-Policy/EmailAlert.jpg)

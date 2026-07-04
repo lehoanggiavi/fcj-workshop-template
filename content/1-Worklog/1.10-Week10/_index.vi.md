@@ -1,59 +1,43 @@
----
+﻿---
 title: "Worklog Tuần 10"
-date: 2024-01-01
-weight: 2
+date: 2026-06-21
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+**Thời gian:** 21/06/2026 - 27/06/2026
 
-### Mục tiêu tuần 10:
+## Mục tiêu tuần 10
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Xử lý kết quả dự đoán từ SageMaker Endpoint.
+- Gửi cảnh báo khi phát hiện giao dịch gian lận.
+- Lưu lịch sử prediction để phục vụ audit và phân tích sau này.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## Công việc đã thực hiện
 
+- Chuẩn hóa response trả về từ SageMaker Endpoint, gồm:
+  - `prediction`
+  - `fraud_probability`
+  - `timestamp`
+  - thông tin transaction gốc.
+- Xây dựng logic xử lý kết quả:
+  - Nếu prediction là `Fraud`, gửi cảnh báo.
+  - Nếu prediction là `Normal`, ghi nhận kết quả và không gửi cảnh báo.
+- Tạo Amazon SNS Topic để gửi email cảnh báo cho Admin.
+- Cấu hình email subscription và xác nhận subscription.
+- Tích hợp Lambda realtime với SNS.
+- Tạo Kinesis Firehose để ghi kết quả prediction xuống Amazon S3.
+- Thiết kế dữ liệu lưu lịch sử gồm:
+  - Transaction
+  - Feature
+  - Prediction
+  - Probability
+  - Timestamp
 
-### Kết quả đạt được tuần 10:
+## Kết quả đạt được
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Hệ thống có thể gửi cảnh báo khi phát hiện giao dịch nghi ngờ gian lận.
+- Toàn bộ kết quả prediction được lưu xuống Amazon S3 thông qua Kinesis Firehose, gồm Transaction, Feature, Prediction, Timestamp và Probability.
+- Có dữ liệu lịch sử phục vụ audit, monitoring và retraining trong tương lai.
+- Pipeline realtime trở nên hoàn chỉnh hơn từ input, prediction, alert đến lưu trữ.
