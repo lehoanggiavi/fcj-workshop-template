@@ -39,10 +39,6 @@ import boto3
 print("Environment is ready")
 ```
 
-{{% notice note %}}
-This is a quick Python environment check using code, so no separate illustration is required. The expected result is that the code runs successfully and prints the line `Environment is ready`.
-{{% /notice %}}
-
 ## Required input
 
 The dataset was uploaded to S3 using the Amazon S3 Console in section 5.3, for example:

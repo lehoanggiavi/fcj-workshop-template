@@ -39,9 +39,6 @@ import boto3
 print("Environment is ready")
 ```
 
-{{% notice note %}}
-Đây là bước kiểm tra nhanh môi trường Python bằng code, nên không cần ảnh minh họa riêng. Kết quả mong đợi là đoạn code chạy thành công và in ra dòng `Environment is ready`.
-{{% /notice %}}
 
 ## Input cần chuẩn bị
 

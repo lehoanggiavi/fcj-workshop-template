@@ -20,9 +20,6 @@ Do not skip the SageMaker Endpoint clean-up step. The endpoint may continue to i
 | --- | --- |
 | SageMaker | Delete only the SageMaker Real-time Endpoint used for the demo |
 
-{{% notice note %}}
-Only work with the SageMaker endpoint for the Fraud Detection project. Do not delete the S3 bucket, Lambda function, API Gateway, Kinesis, Firehose, SNS, CloudWatch Logs, or IAM Role in this step.
-{{% /notice %}}
 
 ## SageMaker Endpoint clean-up steps
 

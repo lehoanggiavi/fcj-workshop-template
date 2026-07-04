@@ -82,9 +82,6 @@ Amazon S3
 
 ![Fraud Detection pipeline diagram](/images/2-Proposal/fraud_detection_pipeline.jpg)
 
-{{% notice note %}}
-**Image to prepare later:** The final architecture diagram of the Fraud Detection system on AWS. You can use the current diagram or redraw it with draw.io/Excalidraw to show the Training Zone and Real-time Zone components more clearly.
-{{% /notice %}}
 
 ## AWS services used
 

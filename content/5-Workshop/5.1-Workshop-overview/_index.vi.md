@@ -119,9 +119,6 @@ Trong vùng này:
 
 ![Sơ đồ pipeline Fraud Detection](/images/2-Proposal/fraud_detection_pipeline.jpg)
 
-{{% notice note %}}
-**Hình cần chụp/chèn sau:** Ảnh sơ đồ kiến trúc hệ thống Fraud Detection. Nếu bạn vẽ lại sơ đồ, nên thể hiện rõ hai vùng Training Zone và Real-time Zone, kèm các dịch vụ: S3, SageMaker, API Gateway, Lambda, Kinesis, SNS, Firehose và CloudWatch.
-{{% /notice %}}
 
 ## 5. Dữ liệu đầu vào và đầu ra mong đợi
 

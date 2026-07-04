@@ -82,9 +82,6 @@ Amazon S3
 
 ![Sơ đồ pipeline Fraud Detection](/images/2-Proposal/fraud_detection_pipeline.jpg)
 
-{{% notice note %}}
-**Hình cần chuẩn bị sau:** Ảnh sơ đồ kiến trúc cuối cùng của hệ thống Fraud Detection trên AWS. Có thể dùng sơ đồ hiện tại hoặc vẽ lại bằng draw.io/Excalidraw để rõ hơn các thành phần Training Zone và Real-time Zone.
-{{% /notice %}}
 
 ## Dịch vụ AWS sử dụng
 

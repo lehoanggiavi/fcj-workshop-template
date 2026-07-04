@@ -20,9 +20,6 @@ Không nên bỏ qua bước clean-up SageMaker Endpoint. Endpoint có thể ti�
 | --- | --- |
 | SageMaker | Chỉ xóa SageMaker Real-time Endpoint đã dùng để demo |
 
-{{% notice note %}}
-Chỉ thao tác với endpoint SageMaker của project Fraud Detection. Không xóa S3 bucket, Lambda function, API Gateway, Kinesis, Firehose, SNS, CloudWatch Logs hoặc IAM Role trong bước này.
-{{% /notice %}}
 
 ## Các bước dọn dẹp SageMaker Endpoint
 

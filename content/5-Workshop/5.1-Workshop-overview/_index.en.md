@@ -119,9 +119,6 @@ In this zone:
 
 ![Fraud Detection pipeline diagram](/images/2-Proposal/fraud_detection_pipeline.jpg)
 
-{{% notice note %}}
-**Image to capture/insert later:** The architecture diagram of the Fraud Detection system. If you redraw the diagram, it should clearly show the two zones, Training Zone and Real-time Zone, with these services: S3, SageMaker, API Gateway, Lambda, Kinesis, SNS, Firehose, and CloudWatch.
-{{% /notice %}}
 
 ## 5. Expected input and output data
 
