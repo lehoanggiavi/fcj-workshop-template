@@ -1,4 +1,4 @@
-baseURL = "https://lehoanggiavi.github.io/fcj-workshop-template/"
+baseURL = "https://lehoanggiavi.github.io/Workshop_LHGV/"
 relativeURLs = false
 canonifyURLs = true
 defaultContentLanguage = "vi"
