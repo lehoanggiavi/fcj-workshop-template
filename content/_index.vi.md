@@ -16,9 +16,9 @@ chapter: false
 
 &emsp; **Ngành:** Khoa Học Dữ Liệu
 
-&emsp; **Công ty thực tập:** AWS
+&emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
 
-&emsp; **Vị trí thực tập:** Cloud Engineering
+&emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
 
 &emsp; **Thời gian thực tập:** Từ ngày 19/04/2026 đến ngày 19/07/2026
 

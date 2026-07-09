@@ -16,9 +16,9 @@ chapter: false
 
 &emsp; **Major:** Data Science
 
-&emsp; **Internship Company:** AWS
+&emsp; **Internship Company:** Amazon Web Services Vietnam Co., Ltd.
 
-&emsp; **Internship Position:** Cloud Engineering
+&emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
 
 &emsp; **Internship Duration:** From 19/04/2026 to 19/07/2026
 
